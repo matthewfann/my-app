@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -27,13 +27,15 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Build
+      run: npm run build
+      
     - name: Run the tests
       run: npm test
 
-    - name: Build
-      run: npm run build
-
-
+    - name: Run lint
+      run: npm run lint --if-present
+      
   merge-branch:
     name: auto_merge
     needs: validate_pull_request
@@ -46,3 +48,4 @@ jobs:
           source_ref: ${{ github.ref }}
           target_branch: 'master'
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+
