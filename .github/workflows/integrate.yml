@@ -2,9 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches: [master]
+    branches: [main]
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   validate_pull_request:
@@ -20,7 +20,6 @@ jobs:
 
     - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
-
       with:
         node-version: ${{ matrix.node-version }}
 
