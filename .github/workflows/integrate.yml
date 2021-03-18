@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    name: validate_pull_request
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,9 +29,23 @@ jobs:
 
     - name: Build
       run: npm run build
-
+      
     - name: Run the tests
       run: npm test
 
     - name: Run lint
       run: npm run lint --if-present
+      
+  merge-branch:
+    name: auto_merge
+    needs: validate_pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: everlytic/branch-merge@1.1.0
+        with:
+          github_token: ${{ github.token }}
+          source_ref: ${{ github.ref }}
+          target_branch: 'master'
+          commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+
