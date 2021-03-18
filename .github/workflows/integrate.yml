@@ -7,7 +7,7 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  validate_pull_request:
     name: validate_pull_request
     runs-on: ubuntu-latest
     strategy:
@@ -32,7 +32,6 @@ jobs:
 
     - name: Build
       run: npm run build
-
 
   merge-branch:
     name: auto_merge
