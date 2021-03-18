@@ -2,12 +2,12 @@ name: CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [master]
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
-  validate_pull_request:
+  build:
     name: validate_pull_request
     runs-on: ubuntu-latest
     strategy:
@@ -27,15 +27,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build
-      run: npm run build
-      
     - name: Run the tests
       run: npm test
 
-    - name: Run lint
-      run: npm run lint --if-present
-      
+    - name: Build
+      run: npm run build
+
+
   merge-branch:
     name: auto_merge
     needs: validate_pull_request
@@ -46,6 +44,5 @@ jobs:
         with:
           github_token: ${{ github.token }}
           source_ref: ${{ github.ref }}
-          target_branch: 'master'
+          target_branch: 'main'
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
-
