@@ -21,7 +21,7 @@ function App() {
         >
           Learn React
         </a>
-        {/* Comment added */}
+        {/* Comment added more comment */}
       </header>
     </div>
   );
